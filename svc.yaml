@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-argocd
+spec:
+  ports:
+  - name: http-port
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: example-argocd
+
