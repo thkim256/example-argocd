@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: echo
+    spec:
+      containers:
+      - image: thkim256/hello-golang
+        imagePullPolicy: Always
+        name: echo
+        ports:
+        - containerPort: 9080
+          name: http-port
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo
+spec:
+  ports:
+  - name: http-port
+    port: 9080
+    protocol: TCP
+    targetPort: 9080
+  selector:
+    app: echo
+  type: NodePort
